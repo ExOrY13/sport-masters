@@ -2,7 +2,16 @@
 
 Jeu de collection de cartes de sportifs : boosters, raretés, classeur.
 
-## Lancer le jeu
+## En ligne
+**https://exory13.github.io/sport-masters/** (dépôt : https://github.com/ExOrY13/sport-masters)
+
+Pour publier tes modifications :
+```
+powershell -ExecutionPolicy Bypass -File publier.ps1 "Ce que j'ai changé"
+```
+Le script augmente le numéro de version des fichiers (pour que les navigateurs ne gardent pas l'ancienne version en cache), enregistre et envoie sur GitHub. Le site est à jour environ 1 minute après.
+
+## Lancer le jeu en local
 Double-clique sur `index.html` (Chrome ou Edge conseillé). Une connexion internet est nécessaire pour les photos, drapeaux et polices.
 La collection est sauvegardée dans le navigateur (localStorage).
 
