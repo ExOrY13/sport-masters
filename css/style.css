@@ -636,6 +636,8 @@ h1 { font-family: var(--title); font-weight: 400; font-size: 54px; letter-spacin
   opacity: 0; transform: translateY(-30px) scale(1.3); transition: .6s .4s;
 }
 .walkout.p-card .wo-title { opacity: 1; transform: none; }
+.wo-title { max-width: 94vw; text-align: center; line-height: 1.05; }
+.wo-title.long { font-size: clamp(28px, 4.6vw, 54px); letter-spacing: .1em; top: 6vh; }
 .wo-L .wo-title {
   background: linear-gradient(90deg, #ff3cac, #ffd200, #2bd2ff, #ff3cac); background-size: 300% 100%;
   -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: none;

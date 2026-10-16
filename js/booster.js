@@ -58,7 +58,9 @@ const Walkout = (() => {
       el.querySelector(".wo-flag img").src = `https://flagcdn.com/w320/${a.country}.png`;
       el.querySelector(".wo-sport .icon").textContent = s.icon;
       el.querySelector(".wo-sport .label").textContent = a.discipline || s.name;
-      el.querySelector(".wo-title").textContent = (opts.shiny ? "✨ Brillante · " : "") + RARITIES[a.rarity].name + (a.icon ? " · Icône" : "");
+      const title = (opts.shiny ? "✨ Brillante · " : "") + RARITIES[a.rarity].name + (a.icon ? " · Icône" : "");
+      el.querySelector(".wo-title").textContent = title;
+      el.querySelector(".wo-title").classList.toggle("long", title.length > 18);
       const holder = el.querySelector(".wo-card");
       holder.innerHTML = "";
       const card = createCard(a, { shiny: !!opts.shiny });
