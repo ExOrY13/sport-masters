@@ -110,7 +110,7 @@ const Duel = (() => {
   function buildRival() {
     const mine = team.map(byId);
     const target = mine.reduce((s, a) => s + power(a), 0) / mine.length + DUEL_LEVELS[level].power;
-    const pool = ATHLETES.filter((a) => !team.includes(a.id))
+    const pool = ATHLETES.filter((a) => !team.includes(a.id) && a.rarity !== "S")
       .map((a) => [Math.abs(a.att + a.def - target) + Math.random() * 14, a])
       .sort((x, y) => x[0] - y[0]);
     return pool.slice(0, DUEL_TEAM_SIZE).map((x) => x[1]);

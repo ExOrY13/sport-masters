@@ -51,6 +51,10 @@ Les numéros affichés (N°001…) sont recalculés automatiquement pour que cha
 ## Boosters gratuits
 1 booster toutes les 10 minutes, 10 en réserve maximum (`FREE_PACK_INTERVAL` et `FREE_PACK_MAX` dans `js/data.js`).
 
+## Cartes secrètes
+Rareté `S` (au-dessus de Légendaire, `weight: 0.15` soit ~5× plus rare), onglet « Cartes secrètes ».
+Taux affiché « ??? », pas de fusion vers Secrète, pas de booster dédié en boutique, jamais utilisées par l'ordinateur en duel.
+
 ## Icônes, Brillantes, récompenses, quêtes
 - **Icônes** : sportifs retraités, listés dans `ICONS` (`js/data.js`). Même rareté, design rétro + écharpe « ICÔNE ».
 - **Brillantes** : 1 % de chance par carte (`SHINY_RATE`). Une fois obtenue, la carte s'affiche brillante dans la collection.
@@ -66,6 +70,7 @@ Bonne réponse = ta carte marque **ATT − ½ DEF adverse** + bonus de rapidité
 et les pages qui ne semblent pas parler d'un sportif. À lancer après chaque ajout de cartes.
 
 ## Raccourcis de test
+- **Shift + Z** : le prochain booster contient une carte Secrète
 - **Shift + S** : le prochain booster contient une Brillante
 - **Shift + L** : le prochain booster contient une Légendaire
 - **Shift + U** : le prochain booster contient une Ultra rare

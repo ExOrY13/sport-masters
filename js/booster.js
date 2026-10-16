@@ -15,7 +15,8 @@ const Walkout = (() => {
   function makeParticles(rarity) {
     const box = el.querySelector(".wo-particles");
     box.innerHTML = "";
-    const colors = rarity === "L" ? ["#ff3cac", "#ffd200", "#2bd2ff", "#a66bff", "#ffffff"] : ["#ffd84d", "#fff3b0", "#ffb300"];
+    const colors = rarity === "S" ? ["#ff4fd8", "#b06bff", "#7ee8ff", "#ffffff"]
+      : rarity === "L" ? ["#ff3cac", "#ffd200", "#2bd2ff", "#a66bff", "#ffffff"] : ["#ffd84d", "#fff3b0", "#ffb300"];
     for (let i = 0; i < 46; i++) {
       const p = document.createElement("span");
       const c = colors[i % colors.length];
@@ -52,13 +53,14 @@ const Walkout = (() => {
   function play(a, opts = {}) {
     return new Promise((resolve) => {
       resolveFn = resolve;
-      big = a.rarity === "L" || !!opts.shiny;
+      big = a.rarity === "L" || a.rarity === "S" || !!opts.shiny;
       const s = sportOf(a);
-      el.className = "walkout wo-" + (opts.shiny ? "L wo-shiny" : a.rarity);
+      el.className = "walkout wo-" + (opts.shiny && a.rarity !== "S" ? "L wo-shiny" : a.rarity);
       el.querySelector(".wo-flag img").src = `https://flagcdn.com/w320/${a.country}.png`;
       el.querySelector(".wo-sport .icon").textContent = s.icon;
       el.querySelector(".wo-sport .label").textContent = a.discipline || s.name;
-      const title = (opts.shiny ? "✨ Brillante · " : "") + RARITIES[a.rarity].name + (a.icon ? " · Icône" : "");
+      const title = a.rarity === "S" ? "Carte secrète" + (opts.shiny ? " · Brillante" : "")
+        : (opts.shiny ? "✨ Brillante · " : "") + RARITIES[a.rarity].name + (a.icon ? " · Icône" : "");
       el.querySelector(".wo-title").textContent = title;
       el.querySelector(".wo-title").classList.toggle("long", title.length > 18);
       const holder = el.querySelector(".wo-card");
@@ -66,7 +68,7 @@ const Walkout = (() => {
       const card = createCard(a, { shiny: !!opts.shiny });
       enableTilt(card, 22);
       holder.appendChild(card);
-      makeParticles(opts.shiny ? "L" : a.rarity);
+      makeParticles(a.rarity === "S" ? "S" : opts.shiny ? "L" : a.rarity);
 
       el.hidden = false;
       setPhase("beam");
@@ -284,6 +286,7 @@ const Booster = (() => {
     const box = document.getElementById("rates");
     box.innerHTML = RARITY_ORDER.map((c) => {
       const n = ATHLETES.filter((a) => a.rarity === c).length;
+      if (c === "S") return `<span class="rate r-S"><i>?</i>??? <small>??? % · ??? cartes</small></span>`; // on garde le mystère
       return `<span class="rate r-${c}"><i>${c}</i>${RARITIES[c].name} <small>${RARITIES[c].weight}% · ${n} cartes</small></span>`;
     }).join("");
   }
@@ -307,6 +310,7 @@ const Booster = (() => {
       if (!ev.shiftKey) return;
       if (ev.key === "L") { forced = "L"; App.toast("Test : prochain booster avec une Légendaire"); }
       if (ev.key === "U") { forced = "UR"; App.toast("Test : prochain booster avec une Ultra rare"); }
+      if (ev.key === "Z") { forced = "S"; App.toast("Test : prochain booster avec une carte secrète"); }
       if (ev.key === "S") { forcedShiny = true; App.toast("Test : prochain booster avec une Brillante"); }
       if (ev.key === "B") { Store.giveFree(FREE_PACK_MAX); Store.save(); updateTimer(); App.toast("Test : réserve de boosters gratuits remplie"); }
     });

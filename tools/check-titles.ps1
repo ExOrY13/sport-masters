@@ -2,7 +2,7 @@
 param([string]$DataFile = (Join-Path (Split-Path $PSScriptRoot -Parent) 'js\data.js'))
 # Verifie que chaque titre Wikipedia pointe bien vers un sportif (pas une homonymie / un homonyme)
 $data = Get-Content -Raw -Encoding UTF8 $DataFile
-$titles = [regex]::Matches($data, '\[\s*"\w+",\s*"([^"]+)",\s*"[a-z-]+",\s*"(?:C|PC|R|SR|UR|L)"') | ForEach-Object { $_.Groups[1].Value }
+$titles = [regex]::Matches($data, '\[\s*"\w+",\s*"([^"]+)",\s*"[a-z-]+",\s*"(?:C|PC|R|SR|UR|L|S)"') | ForEach-Object { $_.Groups[1].Value }
 $ok = 'joueu|footballeu|basketteu|tennism|pilote|boxeu|athl|nageu|nageuse|cycliste|rugby|judok|lutteu|golfeu|hockey|skieu|biathl|fondeu|patineu|surfeu|gymnaste|escrimeu|handball|volley|pongiste|navigat|skateu|grimpeu|triathl|plongeu|kayak|canoe|canoë|sprinteu|marathon|perchiste|sauteu|lanceu|arts martiaux|combattant|karat|taekwond|kickbox|motocycl|sportif|sportive|badminton|quarterback|entraîneu|décathl|heptathl|coureu|hurdl|snowboard|freestyle|haltér|cavali|champion|gardien|dirigeant|homme politique'
 for ($i = 0; $i -lt $titles.Count; $i += 50) {
   $chunk = @($titles[$i..([Math]::Min($i + 49, $titles.Count - 1))])

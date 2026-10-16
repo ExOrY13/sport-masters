@@ -430,6 +430,45 @@ h1 { font-family: var(--title); font-weight: 400; font-size: 54px; letter-spacin
 .r-L .c-photo { box-shadow: inset 0 0 0 .12em #ffd200; }
 @keyframes foil { 0% { background-position: 0% 50%; } 100% { background-position: 300% 50%; } }
 
+/* SECRÈTE : cadre chromé rose/violet animé, fond nuit étoilée */
+.r-S {
+  --frame: linear-gradient(135deg, #2a0038, #ff4fd8, #f6e7ff, #7a00ff, #7ee8ff, #ff4fd8, #2a0038);
+  --panel:
+    radial-gradient(circle at 18% 12%, rgba(255,79,216,.35), transparent 42%),
+    radial-gradient(circle at 85% 88%, rgba(122,0,255,.45), transparent 48%),
+    #08010f;
+  --ink-c: #fff; --badge: linear-gradient(135deg, #ff4fd8, #7a00ff); --badge-ink: #fff;
+  --name-bg: linear-gradient(90deg, #ff4fd8, #7a00ff, #ff4fd8); --name-ink: #fff; --stat-bg: rgba(255,255,255,.08);
+  --att: #ff8be9; --def: #8eeaff;
+}
+.r-S .card-front {
+  background-size: 300% 300%; animation: foil 4s linear infinite;
+  box-shadow: inset 0 0 0 .12em rgba(255,255,255,.7), 0 0 1.8em rgba(255,79,216,.75), 0 0 3.5em rgba(122,0,255,.5), 0 .9em 1.8em rgba(0,0,0,.45);
+}
+.r-S .c-panel::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .8;
+  background-image:
+    radial-gradient(.08em .08em at 12% 18%, #fff, transparent), radial-gradient(.1em .1em at 82% 12%, #fff, transparent),
+    radial-gradient(.07em .07em at 30% 70%, #fff, transparent), radial-gradient(.09em .09em at 66% 46%, #ffd6f7, transparent),
+    radial-gradient(.06em .06em at 90% 64%, #fff, transparent), radial-gradient(.08em .08em at 48% 92%, #d8c4ff, transparent),
+    radial-gradient(.07em .07em at 8% 52%, #fff, transparent), radial-gradient(.06em .06em at 58% 8%, #fff, transparent);
+  animation: pulse 2.2s ease-in-out infinite;
+}
+.r-S .c-holo { opacity: .4; animation: foil 5s linear infinite; }
+.card.r-S.tilting .c-holo { animation: none; }
+.r-S .c-shine { opacity: 1; animation: sweep 2.4s ease-in-out infinite; }
+.r-S .c-name { text-shadow: 0 0 .4em rgba(255,255,255,.7); }
+.r-S .c-photo { box-shadow: inset 0 0 0 .12em #ff9bec; }
+.pack.glow-S { animation: glowOnce 1.2s ease-in-out; --g1: #ff4fd8; --g2: #7a00ff; }
+.card.hint-S .card-back { box-shadow: 0 0 34px 10px rgba(255,79,216,.95); animation: pulse .7s ease-in-out infinite; }
+.revealed.burst-S::before { --bc: #ff4fd8; animation: ring 1.3s ease-out; }
+.walkout.wo-S { --c: #ff4fd8; --c2: #ffffff; --ray: rgba(200,100,255,.18); }
+.wo-S .wo-title {
+  background: linear-gradient(90deg, #ff4fd8, #f6e7ff, #b06bff, #7ee8ff, #ff4fd8); background-size: 300% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: none;
+  filter: drop-shadow(0 0 22px rgba(255,79,216,.9)); animation: foil 3s linear infinite;
+}
+
 /* ---------- Dos de carte ---------- */
 .card-back { background: var(--red); box-shadow: 0 .9em 1.8em rgba(0,0,0,.45); }
 .back-inner {

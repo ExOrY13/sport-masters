@@ -20,6 +20,7 @@ const SPORTS = [
   { id: "nfl",      name: "Football américain",icon: "🏈", color: "#6e3b1f" },
   { id: "hockey",   name: "Hockey sur glace",  icon: "🏒", color: "#2c4a7a" },
   { id: "autres",   name: "Autres sports",     icon: "🏅", color: "#6b4bb8" },
+  { id: "secret",   name: "Cartes secrètes",   icon: "🤫", color: "#5a0f7a" },
 ];
 
 // Boosters gratuits : 1 toutes les 10 minutes, 10 en réserve maximum
@@ -35,8 +36,9 @@ const RARITIES = {
   SR: { code: "SR", name: "Super rare", weight: 6.5, rank: 3, sell: 60 },
   UR: { code: "UR", name: "Ultra rare", weight: 2.8, rank: 4, sell: 150 },
   L:  { code: "L",  name: "Légendaire", weight: 0.7, rank: 5, sell: 400 },
+  S:  { code: "S",  name: "Secrète",    weight: 0.15, rank: 6, sell: 1000 }, // ~5 fois plus rare qu'une Légendaire
 };
-const RARITY_ORDER = ["C", "PC", "R", "SR", "UR", "L"];
+const RARITY_ORDER = ["C", "PC", "R", "SR", "UR", "L", "S"];
 
 const MAX_STARS = 5;   // 1 doublon = 1 étoile = +1 ATT / +1 DEF
 const FUSION_COST = 5; // 5 doublons d'une rareté -> 1 carte de la rareté au-dessus
@@ -1011,6 +1013,13 @@ const RAW = [
   ["autres", "Romain Cannone", "fr", "C", 84, 82, "Champion olympique d'épée 2021", "Escrime"],
   ["autres", "Cassandre Beaugrand", "fr", "C", 86, 86, "Championne olympique de triathlon 2024", "Triathlon"],
   ["autres", "Nyjah Huston", "us", "C", 86, 78, "Star du skateboard street", "Skateboard"],
+
+  // ============================================================
+  //  CARTES SECRÈTES (rareté "S", plus rares que les Légendaires)
+  // ============================================================
+  ["secret", "Madison Beer", "us", "S", 99, 99, "Chanteuse américaine, star de la pop", "Chanteuse"],
+  ["secret", "Madelyn Cline", "us", "S", 99, 99, "Actrice américaine révélée par la série Outer Banks", "Actrice"],
+  ["secret", "Sydney Sweeney", "us", "S", 99, 99, "Actrice américaine révélée par la série Euphoria", "Actrice"],
 ];
 
 // ICÔNES : sportifs qui ont pris leur retraite (ou décédés). Même rareté, mais un design "Icône".

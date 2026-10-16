@@ -145,7 +145,7 @@ const Binder = (() => {
     if (!Rewards.isComplete(s.id) && !Store.isClaimed(s.id)) {
       const missing = cardsOf(s.id).filter((a) => Store.count(a.id) === 0).length;
       rewardEl.className = "binder-reward locked";
-      rewardEl.innerHTML = `🏆 Complète ce sport pour gagner <b>${Rewards.coinsFor(s.id)} 🪙</b> + 1 ${packInfo(SPORT_REWARD_BOOSTER).name} <small>(encore ${missing} carte${missing > 1 ? "s" : ""})</small>`;
+      rewardEl.innerHTML = `🏆 Complète cette collection pour gagner <b>${Rewards.coinsFor(s.id)} 🪙</b> + 1 ${packInfo(SPORT_REWARD_BOOSTER).name} <small>(encore ${missing} carte${missing > 1 ? "s" : ""})</small>`;
       return;
     }
     if (Store.isClaimed(s.id)) {

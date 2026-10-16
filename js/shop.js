@@ -35,7 +35,7 @@ const Shop = (() => {
     gridEl.innerHTML = "";
     gridEl.append(offer("premium", "offer-premium"), offer("elite", "offer-elite"));
     sportsEl.innerHTML = "";
-    SPORTS.forEach((s) => sportsEl.appendChild(offer("sport:" + s.id, "offer-sport")));
+    SPORTS.filter((s) => s.id !== "secret").forEach((s) => sportsEl.appendChild(offer("sport:" + s.id, "offer-sport")));
   }
 
   function init() {

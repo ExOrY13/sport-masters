@@ -3,7 +3,7 @@
 $ErrorActionPreference = "Stop"
 $root = Split-Path $PSScriptRoot -Parent
 $data = Get-Content -Raw -Encoding UTF8 (Join-Path $root "js\data.js")
-$titles = [regex]::Matches($data, '\[\s*"\w+",\s*"([^"]+)",\s*"[a-z-]+",\s*"(?:C|PC|R|SR|UR|L)"') | ForEach-Object { $_.Groups[1].Value }
+$titles = [regex]::Matches($data, '\[\s*"\w+",\s*"([^"]+)",\s*"[a-z-]+",\s*"(?:C|PC|R|SR|UR|L|S)"') | ForEach-Object { $_.Groups[1].Value }
 $dupes = $titles | Group-Object | Where-Object Count -gt 1
 foreach ($d in $dupes) { "EN DOUBLE DANS LA LISTE : $($d.Name)" }
 

@@ -11,7 +11,8 @@ const Atelier = (() => {
 
   function renderFusion() {
     fusionEl.innerHTML = "";
-    RARITY_ORDER.slice(0, -1).forEach((code, i) => {
+    // de Commun jusqu'à Légendaire : les cartes Secrètes ne s'obtiennent qu'en booster
+    RARITY_ORDER.slice(0, RARITY_ORDER.indexOf("L")).forEach((code, i) => {
       const next = RARITY_ORDER[i + 1];
       const have = dupesOfRarity(code);
       const row = document.createElement("div");
