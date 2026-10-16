@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sport Masters</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@500;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="logo" data-view="home" aria-label="Menu principal"><span>SPORT</span><b>MASTERS</b></button>
+    <nav>
+      <button class="nav-btn active" data-view="home">Menu<span class="nav-badge" id="menu-badge" hidden></span></button>
+      <button class="nav-btn" data-view="booster">Boosters</button>
+      <button class="nav-btn" data-view="binder">Classeur</button>
+      <button class="nav-btn" data-view="duel">Duels</button>
+      <button class="nav-btn" data-view="atelier">Atelier</button>
+      <button class="nav-btn" data-view="shop">Boutique</button>
+    </nav>
+    <div class="topbar-right">
+      <button class="sound-btn" id="sound-btn" title="Couper / remettre le son">🔊</button>
+      <button class="coin-pill" data-view="shop" title="Tes pièces">🪙 <span id="coin-text">0</span></button>
+      <div class="progress-pill" title="Cartes différentes découvertes">
+        <span id="progress-text">0 / 0</span>
+        <div class="bar"><i id="progress-bar"></i></div>
+      </div>
+      <button class="login-btn soon" data-soon="La connexion">👤 Se connecter</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- MENU PRINCIPAL -->
+    <section id="view-home" class="view active">
+      <div class="home">
+        <div class="home-hero">
+          <div class="home-logo"><span>SPORT</span><b>MASTERS</b></div>
+          <p>Collectionne les plus grands sportifs de l'histoire</p>
+        </div>
+
+        <div class="home-stats">
+          <div><b id="stat-cards">0</b><span>cartes découvertes</span></div>
+          <div><b id="stat-packs">0</b><span>boosters ouverts</span></div>
+          <div><b id="stat-legend">0</b><span>légendaires</span></div>
+          <div><b id="stat-coins">0</b><span>pièces 🪙</span></div>
+        </div>
+
+        <div class="home-main">
+          <button class="tile tile-booster" data-view="booster">
+            <span class="tile-icon">🎴</span>
+            <span class="tile-title">Ouvrir un booster</span>
+            <span class="tile-sub" id="tile-booster-sub">5 cartes · 1 Rare garantie</span>
+          </button>
+          <button class="tile tile-binder" data-view="binder">
+            <span class="tile-icon">📒</span>
+            <span class="tile-title">Mon classeur</span>
+            <span class="tile-sub" id="tile-binder-sub">0 / 103 cartes</span>
+          </button>
+        </div>
+
+        <div class="panel quests-panel">
+          <div class="panel-head">
+            <h2>🎯 Quêtes du jour</h2>
+            <span class="quest-reset" id="quest-reset"></span>
+          </div>
+          <div id="quest-list" class="quest-list"></div>
+        </div>
+
+        <div class="home-grid">
+          <button class="tile tile-small" data-view="duel">
+            <span class="tile-icon">⚔️</span><span class="tile-title">Duels</span><span class="tile-sub">Affronte tes potes avec tes cartes</span>
+          </button>
+          <button class="tile tile-small" data-view="shop">
+            <span class="tile-icon">🛒</span><span class="tile-title">Boutique</span><span class="tile-sub">Boosters spéciaux</span>
+          </button>
+          <button class="tile tile-small" data-view="atelier">
+            <span class="tile-icon">⚒️</span><span class="tile-title">Atelier</span><span class="tile-sub">Fusionne et gère tes doublons</span>
+          </button>
+          <button class="tile tile-small soon" data-soon="Le marché">
+            <span class="tile-icon">⚖️</span><span class="tile-title">Marché</span><span class="tile-sub">Achète et vends des cartes</span>
+          </button>
+          <button class="tile tile-small soon" data-soon="Les échanges">
+            <span class="tile-icon">🔄</span><span class="tile-title">Échanges</span><span class="tile-sub" id="tile-trade-sub">Troque tes doublons</span>
+          </button>
+          <button class="tile tile-small soon" data-soon="Les amis">
+            <span class="tile-icon">👥</span><span class="tile-title">Amis</span><span class="tile-sub">Ajoute tes potes</span>
+          </button>
+        </div>
+
+        <button class="tile tile-login soon" data-soon="La connexion">
+          <span class="tile-icon">👤</span>
+          <span class="tile-title">Se connecter / Créer un compte</span>
+          <span class="tile-sub">Sauvegarde en ligne, amis, échanges et marché</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- BOOSTERS -->
+    <section id="view-booster" class="view">
+      <div class="booster-intro" id="booster-intro">
+        <h1>Ouvre un booster</h1>
+        <p class="sub" id="pack-desc"></p>
+        <p class="free-timer" id="free-timer"></p>
+        <div class="pack-choices" id="pack-choices"></div>
+
+        <div class="pack" id="pack" role="button" aria-label="Ouvrir le booster">
+          <div class="pack-top">
+            <div class="pack-crimp"></div>
+            <div class="pack-tearstrip">✂ · · · · · · · · · · ·</div>
+          </div>
+          <div class="pack-body">
+            <div class="pack-band"></div>
+            <div class="pack-logo"><span>SPORT</span><b>MASTERS</b></div>
+            <div class="pack-icons">⚽ 🏀 🎾 🏎️ 🥊</div>
+            <div class="pack-label">BOOSTER · 5 CARTES</div>
+            <div class="pack-foil"></div>
+          </div>
+          <div class="pack-crimp bottom"></div>
+        </div>
+        <p class="hint" id="pack-hint">Clique sur le booster pour l'ouvrir</p>
+        <div class="rates" id="rates"></div>
+      </div>
+
+      <div class="reveal" id="reveal" hidden>
+        <div class="reveal-row" id="reveal-row"></div>
+        <div class="reveal-actions">
+          <button class="btn" id="btn-reveal-all">Tout révéler</button>
+          <button class="btn btn-yellow" id="btn-again" hidden>Ouvrir un autre booster</button>
+        </div>
+        <p class="hint">Clique sur une carte pour la retourner, puis à nouveau pour la voir en grand</p>
+      </div>
+
+      <p class="stats-line">Boosters ouverts : <b id="packs-count">0</b></p>
+    </section>
+
+    <!-- CLASSEUR -->
+    <section id="view-binder" class="view">
+      <div class="binder-search">
+        <input type="search" id="search-text" placeholder="🔎 Rechercher un sportif, un pays, un sport, « Ballon d'or »..." autocomplete="off">
+        <select id="f-rarity" aria-label="Rareté"></select>
+        <select id="f-status" aria-label="Actifs ou icônes">
+          <option value="">Actifs et Icônes</option>
+          <option value="active">Actifs</option>
+          <option value="icon">Icônes</option>
+        </select>
+        <select id="f-owned" aria-label="Collection">
+          <option value="">Toute la collection</option>
+          <option value="owned">Possédées</option>
+          <option value="missing">Manquantes</option>
+          <option value="shiny">Brillantes ✨</option>
+          <option value="dupes">Avec doublons</option>
+          <option value="trade">Gardées pour échange</option>
+        </select>
+        <button class="search-clear" id="search-clear" hidden>✕ Effacer</button>
+      </div>
+      <div class="binder-tabs" id="binder-tabs"></div>
+      <div class="binder">
+        <div class="binder-head">
+          <h2 id="binder-title"></h2>
+          <span id="binder-count"></span>
+        </div>
+        <div id="binder-reward" class="binder-reward"></div>
+        <div class="spread" id="spread"></div>
+        <div class="binder-nav">
+          <button class="btn round" id="prev-page" aria-label="Page précédente">‹</button>
+          <span id="page-indicator"></span>
+          <button class="btn round" id="next-page" aria-label="Page suivante">›</button>
+        </div>
+      </div>
+      <button class="reset-btn" id="btn-reset">Réinitialiser la collection</button>
+    </section>
+
+    <!-- DUELS -->
+    <section id="view-duel" class="view">
+      <div class="page-wrap">
+        <!-- Préparation -->
+        <div id="duel-setup">
+          <h1>Duels</h1>
+          <p class="sub">Choisis 3 cartes. À chaque manche, réponds à une question sur ton sportif :
+            bonne réponse = ta carte attaque (<b>ATT − ½ DEF adverse</b>, + bonus de rapidité). Le plus de points après 3 manches gagne !</p>
+          <p class="duel-record" id="duel-record"></p>
+
+          <div class="panel">
+            <h2>Niveau</h2>
+            <div class="levels">
+              <button class="level-btn" data-level="facile">Facile<small></small></button>
+              <button class="level-btn" data-level="normal">Normal<small></small></button>
+              <button class="level-btn" data-level="difficile">Difficile<small></small></button>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Ton équipe <span id="duel-team-count"></span></h2>
+              <div class="duel-actions">
+                <button class="btn" id="duel-auto">Équipe auto</button>
+                <button class="btn btn-yellow" id="duel-start" disabled>⚔️ Lancer le duel</button>
+              </div>
+            </div>
+            <div class="duel-team" id="duel-team"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Ta collection</h2>
+              <input type="search" class="duel-filter" id="duel-filter" placeholder="🔎 Chercher une carte..." autocomplete="off">
+            </div>
+            <p class="panel-note">Clique sur une carte pour l'ajouter à ton équipe (les plus fortes sont en premier).</p>
+            <div class="dupes-grid" id="duel-pick"></div>
+          </div>
+        </div>
+
+        <!-- Arène -->
+        <div id="duel-battle" hidden>
+          <div class="duel-score">
+            <div><small>Toi</small><b id="duel-score-me">0</b></div>
+            <div class="duel-round" id="duel-round"></div>
+            <div><small id="duel-rival-name"></small><b id="duel-score-him">0</b></div>
+          </div>
+          <div class="arena">
+            <div class="duel-card" id="duel-mine"></div>
+            <div class="duel-center">
+              <div class="duel-timer"><i id="duel-timer"></i></div>
+              <p class="duel-prompt" id="duel-prompt"></p>
+              <p class="duel-quote" id="duel-quote"></p>
+              <div class="duel-options" id="duel-options"></div>
+              <div class="duel-outcome" id="duel-outcome"></div>
+              <button class="btn btn-yellow" id="duel-next" hidden>Manche suivante</button>
+            </div>
+            <div class="duel-card" id="duel-rival"></div>
+          </div>
+          <button class="reset-btn" id="duel-quit">Abandonner le duel</button>
+        </div>
+
+        <!-- Résultat -->
+        <div id="duel-result" class="duel-result" hidden>
+          <h1 id="duel-result-title"></h1>
+          <p class="duel-result-score" id="duel-result-score"></p>
+          <p class="duel-result-reward" id="duel-result-reward"></p>
+          <div class="reveal-actions">
+            <button class="btn btn-yellow" id="duel-again">Rejouer avec la même équipe</button>
+            <button class="btn" id="duel-change">Changer d'équipe</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ATELIER -->
+    <section id="view-atelier" class="view">
+      <div class="page-wrap">
+        <h1>Atelier</h1>
+        <p class="sub">Clique sur une carte pour l'<b>améliorer</b>, la <b>vendre</b> ou la <b>garder pour l'échange</b>.</p>
+
+        <div class="panel">
+          <h2>🧪 Fusion</h2>
+          <p class="panel-note">Sacrifie 5 doublons d'une rareté pour obtenir une carte de la rareté au-dessus, de préférence une que tu n'as pas encore. Les cartes gardées pour l'échange ne sont jamais utilisées.</p>
+          <div id="fusion-list" class="fusion-list"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <h2>📦 Mes doublons</h2>
+            <button class="btn btn-yellow" id="btn-sell-all"></button>
+          </div>
+          <div id="dupes-grid" class="dupes-grid"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOUTIQUE -->
+    <section id="view-shop" class="view">
+      <div class="page-wrap">
+        <h1>Boutique</h1>
+        <p class="sub">Gagne des pièces 🪙 en vendant tes doublons dans l'Atelier. Le Booster Standard reste gratuit.</p>
+        <div class="panel">
+          <h2>Boosters spéciaux</h2>
+          <div id="shop-main" class="shop-grid"></div>
+        </div>
+        <div class="panel">
+          <h2>Boosters par sport</h2>
+          <div id="shop-sports" class="shop-grid small"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Détail d'une carte -->
+  <div class="modal" id="card-modal" hidden>
+    <button class="modal-close" id="modal-close" aria-label="Fermer">✕</button>
+    <div class="modal-inner">
+      <div id="modal-card"></div>
+      <div class="modal-side">
+        <h3 class="modal-title" id="modal-title" hidden></h3>
+        <p class="modal-info" id="modal-info"></p>
+        <div class="modal-actions" id="modal-actions"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Animation Ultra rare / Légendaire -->
+  <div class="walkout" id="walkout" hidden>
+    <div class="wo-bg"></div>
+    <div class="wo-beam"></div>
+    <div class="wo-rays"></div>
+    <div class="wo-particles"></div>
+    <div class="wo-step wo-flag"><img alt=""></div>
+    <div class="wo-step wo-sport"><span class="icon"></span><span class="label"></span></div>
+    <div class="wo-title"></div>
+    <div class="wo-card"></div>
+    <div class="wo-flash"></div>
+    <p class="wo-skip">Clique pour continuer</p>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/photos-map.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/photos.js"></script>
+  <script src="js/sound.js"></script>
+  <script src="js/card.js"></script>
+  <script src="js/booster.js"></script>
+  <script src="js/binder.js"></script>
+  <script src="js/shop.js"></script>
+  <script src="js/atelier.js"></script>
+  <script src="js/quests.js"></script>
+  <script src="js/duel.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
