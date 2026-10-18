@@ -2,12 +2,12 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>Sport Masters</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@500;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=5">
+  <link rel="stylesheet" href="css/style.css?v=6">
 </head>
 <body>
   <header class="topbar">
@@ -27,7 +27,7 @@
         <span id="progress-text">0 / 0</span>
         <div class="bar"><i id="progress-bar"></i></div>
       </div>
-      <button class="login-btn soon" data-soon="La connexion">👤 Se connecter</button>
+      <button class="login-btn" data-auth title="Compte en ligne">👤<span class="auth-label">Se connecter</span></button>
     </div>
   </header>
 
@@ -89,10 +89,10 @@
           </button>
         </div>
 
-        <button class="tile tile-login soon" data-soon="La connexion">
+        <button class="tile tile-login" data-auth>
           <span class="tile-icon">👤</span>
           <span class="tile-title">Se connecter / Créer un compte</span>
-          <span class="tile-sub">Sauvegarde en ligne, amis, échanges et marché</span>
+          <span class="tile-sub">Joue sur n'importe quel appareil avec ta partie</span>
         </button>
       </div>
     </section>
@@ -293,6 +293,7 @@
       <div id="modal-card"></div>
       <div class="modal-side">
         <h3 class="modal-title" id="modal-title" hidden></h3>
+        <div class="modal-bio" id="modal-bio"></div>
         <p class="modal-info" id="modal-info"></p>
         <div class="modal-actions" id="modal-actions"></div>
       </div>
@@ -313,20 +314,50 @@
     <p class="wo-skip">Clique pour continuer</p>
   </div>
 
+  <!-- Compte en ligne -->
+  <div class="modal auth-modal" id="auth-modal" hidden>
+    <div class="auth-box">
+      <button class="modal-close" id="auth-close" aria-label="Fermer">✕</button>
+      <div id="auth-form-wrap">
+        <h3>Ton compte Sport Masters</h3>
+        <div class="auth-tabs">
+          <button type="button" data-mode="login" class="active">Se connecter</button>
+          <button type="button" data-mode="signup">Créer un compte</button>
+        </div>
+        <form id="auth-form" autocomplete="on">
+          <label>Pseudo<input id="auth-pseudo" name="username" autocomplete="username" maxlength="16" autocapitalize="off" spellcheck="false"></label>
+          <label>Mot de passe<input id="auth-pass" name="password" type="password" autocomplete="current-password"></label>
+          <p class="auth-note" id="auth-note"></p>
+          <p class="auth-error" id="auth-error"></p>
+          <button class="btn btn-yellow" type="submit" id="auth-submit">Se connecter</button>
+        </form>
+      </div>
+      <div id="auth-account" hidden>
+        <h3>👤 <span id="auth-name"></span></h3>
+        <p>Ta partie est sauvegardée en ligne : connecte-toi avec ce pseudo sur n'importe quel appareil (téléphone, ordinateur…).</p>
+        <p class="auth-status" id="auth-status"></p>
+        <button class="btn" id="auth-logout">Se déconnecter</button>
+      </div>
+    </div>
+  </div>
+
   <div class="toast" id="toast"></div>
 
-  <script src="js/data.js?v=5"></script>
-  <script src="js/photos-map.js?v=5"></script>
-  <script src="js/store.js?v=5"></script>
-  <script src="js/photos.js?v=5"></script>
-  <script src="js/sound.js?v=5"></script>
-  <script src="js/card.js?v=5"></script>
-  <script src="js/booster.js?v=5"></script>
-  <script src="js/binder.js?v=5"></script>
-  <script src="js/shop.js?v=5"></script>
-  <script src="js/atelier.js?v=5"></script>
-  <script src="js/quests.js?v=5"></script>
-  <script src="js/duel.js?v=5"></script>
-  <script src="js/app.js?v=5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+  <script src="js/config.js?v=6"></script>
+  <script src="js/data.js?v=6"></script>
+  <script src="js/photos-map.js?v=6"></script>
+  <script src="js/store.js?v=6"></script>
+  <script src="js/photos.js?v=6"></script>
+  <script src="js/sound.js?v=6"></script>
+  <script src="js/card.js?v=6"></script>
+  <script src="js/booster.js?v=6"></script>
+  <script src="js/binder.js?v=6"></script>
+  <script src="js/shop.js?v=6"></script>
+  <script src="js/atelier.js?v=6"></script>
+  <script src="js/quests.js?v=6"></script>
+  <script src="js/duel.js?v=6"></script>
+  <script src="js/cloud.js?v=6"></script>
+  <script src="js/app.js?v=6"></script>
 </body>
 </html>

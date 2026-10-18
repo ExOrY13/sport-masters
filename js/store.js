@@ -27,7 +27,16 @@ const Store = (() => {
     } catch (e) { /* stockage indisponible : on joue sans sauvegarde */ }
   }
 
+  // Appelé après chaque sauvegarde (synchronisation en ligne quand le joueur est connecté)
+  let onSave = null;
   function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+    if (onSave) onSave();
+  }
+
+  // Remplace toute la sauvegarde (chargement d'un compte en ligne)
+  function replace(s) {
+    state = Object.assign(blank(), s && s.owned ? s : {});
     try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
   }
 
@@ -50,7 +59,10 @@ const Store = (() => {
   }
 
   return {
-    load, save, count, reserved, stars, dupes,
+    load, save, replace, count, reserved, stars, dupes,
+    exportState: () => JSON.parse(JSON.stringify(state)),
+    isEmpty: () => !state.packs && !Object.keys(state.owned).length,
+    set onSave(fn) { onSave = fn; },
     add(id) { state.owned[id] = count(id) + 1; },
 
     get coins() { return state.coins; },

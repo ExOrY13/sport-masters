@@ -48,6 +48,16 @@ Chaque carte a un **identifiant fixe** tiré de son titre Wikipédia : ajouter d
 Attention aux homonymes : vérifie que le titre mène bien au sportif (ex. `"Paolo Rossi (football)"` et pas `"Paolo Rossi"`).
 Les numéros affichés (N°001…) sont recalculés automatiquement pour que chaque sport se suive.
 
+## Comptes en ligne (`js/cloud.js`, Supabase)
+Pseudo + mot de passe, la partie est sauvegardée en ligne et se retrouve sur n'importe quel appareil.
+- Configuration : `SUPABASE_URL` et `SUPABASE_KEY` dans `js/config.js` (vides = connexion désactivée, bouton « bientôt »).
+- Base de données : coller `supabase.sql` dans Supabase (SQL Editor). Chaque joueur ne peut lire/modifier que sa partie (RLS).
+- Dans Supabase, **Authentication > Sign In / Providers > Email : désactiver « Confirm email »** (les e-mails sont fabriqués à partir du pseudo).
+- Le mot de passe ne peut pas être récupéré par e-mail. En cas d'oubli : supprimer l'utilisateur dans Supabase (Authentication > Users).
+
+## Fiche du sportif
+En cliquant sur une carte, l'introduction de son article Wikipédia est chargée (`fetchBio` dans `js/app.js`).
+
 ## Boosters gratuits
 1 booster toutes les 10 minutes, 10 en réserve maximum (`FREE_PACK_INTERVAL` et `FREE_PACK_MAX` dans `js/data.js`).
 

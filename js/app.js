@@ -1,6 +1,6 @@
 // Navigation, progression, fenêtre de détail d'une carte (avec les actions sur les doublons)
 const App = (() => {
-  let modal, modalCard, modalTitle, modalInfo, modalActions, toastEl, toastTimer;
+  let modal, modalCard, modalTitle, modalBio, modalInfo, modalActions, toastEl, toastTimer;
   let currentView = "home";
   let modalAthlete = null;
 
@@ -56,6 +56,41 @@ const App = (() => {
     modal.hidden = false;
   }
 
+  // ---------- Fiche du sportif (résumé Wikipédia, chargé à la demande) ----------
+  const bioCache = new Map();
+  function fetchBio(a) {
+    if (!bioCache.has(a.id)) {
+      // Introduction complète de l'article (plusieurs paragraphes), coupée vers 1200 caractères
+      const url = "https://fr.wikipedia.org/w/api.php?action=query&prop=extracts&exintro=1&explaintext=1&exchars=1200" +
+        "&redirects=1&format=json&formatversion=2&origin=*&titles=" + encodeURIComponent(a.wiki);
+      bioCache.set(a.id, fetch(url).then((r) => r.ok ? r.json() : null).then((j) => {
+        const p = j && j.query && j.query.pages && j.query.pages[0];
+        return p && p.extract ? { extract: p.extract.trim(), link: "https://fr.wikipedia.org/wiki/" + encodeURIComponent(p.title.replace(/ /g, "_")) } : null;
+      }).catch(() => null));
+    }
+    return bioCache.get(a.id);
+  }
+  const esc = (t) => t.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+  function renderBio(a) {
+    const s = sportOf(a);
+    const facts = [
+      `<span><img src="https://flagcdn.com/w40/${a.country}.png" alt=""> ${countryName(a.country)}</span>`,
+      `<span>${s.icon} ${a.discipline || s.name}</span>`,
+      `<span>${a.icon ? "🏛️ Icône (retraité)" : "🟢 En activité"}</span>`,
+      `<span>N° ${String(a.num).padStart(3, "0")}</span>`,
+    ].join("");
+    modalBio.innerHTML = `<h4>${esc(a.name)}</h4><div class="bio-facts">${facts}</div><p class="bio-text loading">Chargement de la biographie…</p>`;
+    fetchBio(a).then((j) => {
+      if (modalAthlete !== a) return; // une autre carte a été ouverte entre-temps
+      const p = modalBio.querySelector(".bio-text");
+      if (!j) { p.className = "bio-text"; p.textContent = a.desc + "."; return; }
+      p.className = "bio-text";
+      p.textContent = j.extract;
+      p.insertAdjacentHTML("afterend", `<a class="bio-link" href="${esc(j.link)}" target="_blank" rel="noopener">Lire la suite sur Wikipédia ↗</a>`);
+    });
+  }
+
   function renderModal(animate) {
     const a = modalAthlete;
     const r = RARITIES[a.rarity];
@@ -64,6 +99,7 @@ const App = (() => {
     if (!animate) card.style.animation = "none";
     enableTilt(card, 22);
     modalCard.appendChild(card);
+    if (animate) renderBio(a);
 
     const n = Store.count(a.id), d = Store.dupes(a.id), res = Store.reserved(a.id), st = Store.stars(a.id);
     modalInfo.innerHTML =
@@ -111,6 +147,7 @@ const App = (() => {
     modal = document.getElementById("card-modal");
     modalCard = document.getElementById("modal-card");
     modalTitle = document.getElementById("modal-title");
+    modalBio = document.getElementById("modal-bio");
     modalInfo = document.getElementById("modal-info");
     modalActions = document.getElementById("modal-actions");
     toastEl = document.getElementById("toast");
@@ -146,9 +183,17 @@ const App = (() => {
     Duel.init();
     refreshProgress();
     Quests.render();
+    Cloud.init();
   }
 
-  return { init, refreshProgress, openModal, toast };
+  // Après le chargement d'une partie en ligne : tout l'affichage est recalculé
+  function reloadAll() {
+    closeModal();
+    refreshProgress();
+    rerenderView();
+  }
+
+  return { init, refreshProgress, openModal, toast, reloadAll };
 })();
 
 document.addEventListener("DOMContentLoaded", App.init);
