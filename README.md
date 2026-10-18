@@ -52,7 +52,8 @@ Les numéros affichés (N°001…) sont recalculés automatiquement pour que cha
 1 booster toutes les 10 minutes, 10 en réserve maximum (`FREE_PACK_INTERVAL` et `FREE_PACK_MAX` dans `js/data.js`).
 
 ## Cartes secrètes
-Rareté `S` (au-dessus de Légendaire, `weight: 0.15` soit ~5× plus rare), onglet « Cartes secrètes ».
+Rareté `S` (au-dessus de Légendaire, `weight: 0.03` soit ~6× plus rare), onglet « Cartes secrètes ».
+Chances par Booster Standard : Ultra rare ~1/13, Légendaire ~1/60, Secrète ~1/340.
 Taux affiché « ??? », pas de fusion vers Secrète, pas de booster dédié en boutique, jamais utilisées par l'ordinateur en duel.
 
 ## Icônes, Brillantes, récompenses, quêtes
